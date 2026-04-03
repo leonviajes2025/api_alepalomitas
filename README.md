@@ -36,8 +36,7 @@ npm run prisma:seed
 Para producción en Vercel:
 
 ```bash
-npm run prisma:deploy
-npm run build
+npm run vercel-build
 ```
 
 ## Datos de ejemplo
@@ -53,8 +52,9 @@ npm run prisma:seed
 - Configura en Vercel las variables DATABASE_URL y DIRECT_URL.
 - Usa DATABASE_URL con pooling por el puerto 6543.
 - Usa DIRECT_URL con conexion directa por el puerto 5432 para migraciones.
-- El build del proyecto ya ejecuta `prisma generate && next build`.
-- Antes del primer despliegue productivo ejecuta `npm run prisma:deploy`.
+- Vercel ejecuta automaticamente `npm run vercel-build`.
+- Ese flujo corre `prisma migrate deploy` antes de `next build`.
+- El build local `npm run build` sigue sin aplicar migraciones automaticamente.
 
 ## Endpoints
 
