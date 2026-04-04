@@ -50,7 +50,22 @@ export function serializeContactoWhats(contactoWhats: {
   fechaCreacion: Date;
 }) {
   return {
-    ...contactoWhats,
+    id: contactoWhats.id,
+    cotizacion: contactoWhats.cotizacion,
     fechaCreacion: contactoWhats.fechaCreacion.toISOString(),
+  };
+}
+
+export function serializeCotizacionDetalle(cotizacionDetalle: {
+  id: number;
+  idPedido: number;
+  idProducto: number;
+  numeroPiezas: number;
+}) {
+  return {
+    id: cotizacionDetalle.id,
+    idPedido: cotizacionDetalle.idPedido,
+    idProducto: cotizacionDetalle.idProducto,
+    numeroPiezas: cotizacionDetalle.numeroPiezas,
   };
 }

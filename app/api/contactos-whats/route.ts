@@ -29,7 +29,9 @@ export async function POST(request: Request) {
       data: validation.data,
     });
 
-    return NextResponse.json(serializeContactoWhats(contactoWhats), { status: 201 });
+    const serializedContactoWhats = serializeContactoWhats(contactoWhats);
+
+    return NextResponse.json(serializedContactoWhats, { status: 201 });
   } catch {
     return NextResponse.json({ message: "No fue posible crear la solicitud de WhatsApp." }, { status: 400 });
   }

@@ -30,6 +30,7 @@ model Producto {
   activo             Boolean  @default(true)
   fechaCreacion      DateTime @default(now())
   fechaActualizacion DateTime @updatedAt
+  cotizacionDetalles CotizacionDetalle[]
 
   @@map("productos")
 }
@@ -38,6 +39,20 @@ model ContactoWhats {
   id            Int      @id @default(autoincrement())
   cotizacion    String
   fechaCreacion DateTime @default(now())
+  detalles      CotizacionDetalle[]
 
   @@map("contactos_whats")
+}
+
+model CotizacionDetalle {
+  id           Int          @id @default(autoincrement())
+  idPedido     Int
+  idProducto   Int
+  numeroPiezas Int
+  pedido       ContactoWhats @relation(fields: [idPedido], references: [id], onDelete: Cascade)
+  producto     Producto     @relation(fields: [idProducto], references: [id], onDelete: Restrict)
+
+  @@index([idPedido])
+  @@index([idProducto])
+  @@map("cotizacion_detalle")
 }

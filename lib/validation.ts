@@ -31,6 +31,12 @@ export type ContactoWhatsInput = {
   cotizacion: string;
 };
 
+export type CotizacionDetalleCreateInput = {
+  idPedido: number;
+  idProducto: number;
+  numeroPiezas: number;
+};
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function isNonEmptyString(value: unknown): value is string {
@@ -65,6 +71,26 @@ function parsePrecio(value: unknown): string | null {
   }
 
   return Number(normalized).toFixed(2);
+}
+
+function parsePositiveInt(value: unknown): number | null {
+  if (typeof value === "number") {
+    return Number.isInteger(value) && value > 0 ? value : null;
+  }
+
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const normalized = value.trim();
+
+  if (!/^\d+$/.test(normalized)) {
+    return null;
+  }
+
+  const parsed = Number.parseInt(normalized, 10);
+
+  return parsed > 0 ? parsed : null;
 }
 
 export function validateContactoInput(payload: unknown): ValidationResult<ContactoInput> {
@@ -222,6 +248,40 @@ export function validateContactoWhatsInput(payload: unknown): ValidationResult<C
     success: true,
     data: {
       cotizacion: body.cotizacion.trim(),
+    },
+  };
+}
+
+export function validateCotizacionDetalleCreateInput(
+  payload: unknown,
+): ValidationResult<CotizacionDetalleCreateInput> {
+  if (!payload || typeof payload !== "object") {
+    return { success: false, message: "El cuerpo de la solicitud debe ser un objeto JSON." };
+  }
+
+  const body = payload as Record<string, unknown>;
+  const idPedido = parsePositiveInt(body.idPedido);
+  const idProducto = parsePositiveInt(body.idProducto);
+  const numeroPiezas = parsePositiveInt(body.numeroPiezas);
+
+  if (idPedido === null) {
+    return { success: false, message: "idPedido debe ser un entero positivo." };
+  }
+
+  if (idProducto === null) {
+    return { success: false, message: "idProducto debe ser un entero positivo." };
+  }
+
+  if (numeroPiezas === null) {
+    return { success: false, message: "numeroPiezas debe ser un entero positivo." };
+  }
+
+  return {
+    success: true,
+    data: {
+      idPedido,
+      idProducto,
+      numeroPiezas,
     },
   };
 }
