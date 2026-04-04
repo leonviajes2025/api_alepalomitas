@@ -66,6 +66,7 @@ async function main() {
 
   await upsertProducto({
     nombre: "Producto Base",
+    categoria: "Electronica",
     descripcion: "Producto principal para pruebas del endpoint.",
     precio: "199.99",
     imagenUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80",
@@ -74,6 +75,7 @@ async function main() {
 
   await upsertProducto({
     nombre: "Producto Promo",
+    categoria: "Calzado",
     descripcion: "Producto alternativo con precio promocional.",
     precio: "149.90",
     imagenUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
@@ -82,6 +84,7 @@ async function main() {
 
   await upsertProducto({
     nombre: "Producto Inactivo",
+    categoria: "Audio",
     descripcion: "Registro de ejemplo para validar borrado logico.",
     precio: "89.50",
     imagenUrl: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80",

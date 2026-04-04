@@ -66,7 +66,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Producto Postman\",\n  \"descripcion\": \"Creado desde la coleccion de Postman\",\n  \"precio\": \"220.00\",\n  \"imagenUrl\": \"https://example.com/postman.jpg\",\n  \"activo\": true\n}"
+              "raw": "{\n  \"nombre\": \"Producto Postman\",\n  \"categoria\": \"Accesorios\",\n  \"descripcion\": \"Creado desde la coleccion de Postman\",\n  \"precio\": \"220.00\",\n  \"imagenUrl\": \"https://example.com/postman.jpg\",\n  \"activo\": true\n}"
             },
             "url": "{{baseUrl}}/api/productos"
           }
@@ -83,7 +83,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Producto Actualizado Postman\",\n  \"precio\": \"180.00\"\n}"
+              "raw": "{\n  \"nombre\": \"Producto Actualizado Postman\",\n  \"categoria\": \"Hogar\",\n  \"precio\": \"180.00\"\n}"
             },
             "url": "{{baseUrl}}/api/productos/{{productoId}}"
           }

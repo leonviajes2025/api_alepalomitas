@@ -88,6 +88,7 @@ Ejemplo de payload para crear producto:
 ```json
 {
   "nombre": "Producto 1",
+  "categoria": "Electronica",
   "descripcion": "Descripcion del producto",
   "precio": "199.99",
   "imagenUrl": "https://example.com/imagen.jpg",
@@ -100,6 +101,7 @@ Ejemplo de payload para actualizar producto:
 ```json
 {
   "nombre": "Producto actualizado",
+  "categoria": "Hogar",
   "precio": "149.90"
 }
 ```

@@ -23,6 +23,7 @@ model Contacto {
 model Producto {
   id                 Int      @id @default(autoincrement())
   nombre             String
+  categoria          String   @db.VarChar(255)
   descripcion        String
   precio             Decimal  @db.Decimal(10, 2)
   imagenUrl          String

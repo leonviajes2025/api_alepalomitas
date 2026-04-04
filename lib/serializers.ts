@@ -28,6 +28,7 @@ export function serializeContacto(contacto: {
 export function serializeProducto(producto: {
   id: number;
   nombre: string;
+  categoria: string;
   descripcion: string;
   precio: { toString(): string };
   imagenUrl: string;

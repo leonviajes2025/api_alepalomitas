@@ -11,6 +11,7 @@ export type ContactoInput = {
 
 export type ProductoCreateInput = {
   nombre: string;
+  categoria: string;
   descripcion: string;
   precio: string;
   imagenUrl: string;
@@ -19,6 +20,7 @@ export type ProductoCreateInput = {
 
 export type ProductoUpdateInput = {
   nombre?: string;
+  categoria?: string;
   descripcion?: string;
   precio?: string;
   imagenUrl?: string;
@@ -113,6 +115,10 @@ export function validateProductoCreateInput(payload: unknown): ValidationResult<
     return { success: false, message: "El nombre es obligatorio." };
   }
 
+  if (!isNonEmptyString(body.categoria)) {
+    return { success: false, message: "La categoria es obligatoria." };
+  }
+
   if (!isNonEmptyString(body.descripcion)) {
     return { success: false, message: "La descripcion es obligatoria." };
   }
@@ -133,6 +139,7 @@ export function validateProductoCreateInput(payload: unknown): ValidationResult<
     success: true,
     data: {
       nombre: body.nombre.trim(),
+      categoria: body.categoria.trim(),
       descripcion: body.descripcion.trim(),
       precio,
       imagenUrl: body.imagenUrl.trim(),
@@ -154,6 +161,13 @@ export function validateProductoUpdateInput(payload: unknown): ValidationResult<
       return { success: false, message: "El nombre debe ser un texto no vacio." };
     }
     data.nombre = body.nombre.trim();
+  }
+
+  if ("categoria" in body) {
+    if (!isNonEmptyString(body.categoria)) {
+      return { success: false, message: "La categoria debe ser un texto no vacio." };
+    }
+    data.categoria = body.categoria.trim();
   }
 
   if ("descripcion" in body) {
