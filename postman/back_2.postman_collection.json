@@ -55,6 +55,13 @@
           }
         },
         {
+          "name": "GET productos activos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/productos/activos"
+          }
+        },
+        {
           "name": "POST producto",
           "request": {
             "method": "POST",

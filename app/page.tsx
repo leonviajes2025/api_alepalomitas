@@ -15,6 +15,11 @@ const endpoints = [
     description: "Lista todos los productos.",
   },
   {
+    method: "GET",
+    path: "/api/productos/activos",
+    description: "Lista solo los productos activos.",
+  },
+  {
     method: "POST",
     path: "/api/productos",
     description: "Crea un producto nuevo.",

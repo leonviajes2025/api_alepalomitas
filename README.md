@@ -77,6 +77,7 @@ Ejemplo de payload para crear contacto:
 ### Productos
 
 - GET `/api/productos`
+- GET `/api/productos/activos`
 - POST `/api/productos`
 - PUT `/api/productos/:id`
 - DELETE `/api/productos/:id`
