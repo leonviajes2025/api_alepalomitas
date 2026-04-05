@@ -43,12 +43,14 @@ async function main() {
       nombre: "Ana Perez",
       telefono: "+5215555555555",
       aceptaPromociones: true,
+      pregunta: "Quiero conocer tiempos de entrega para un pedido grande.",
     },
     create: {
       nombre: "Ana Perez",
       email: "ana@example.com",
       telefono: "+5215555555555",
       aceptaPromociones: true,
+      pregunta: "Quiero conocer tiempos de entrega para un pedido grande.",
     },
   });
 
@@ -58,12 +60,14 @@ async function main() {
       nombre: "Luis Ramirez",
       telefono: "+5215555555501",
       aceptaPromociones: false,
+      pregunta: null,
     },
     create: {
       nombre: "Luis Ramirez",
       email: "luis@example.com",
       telefono: "+5215555555501",
       aceptaPromociones: false,
+      pregunta: null,
     },
   });
 

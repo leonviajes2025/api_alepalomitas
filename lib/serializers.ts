@@ -19,6 +19,7 @@ export function serializeContacto(contacto: {
   email: string;
   telefono: string;
   aceptaPromociones: boolean;
+  pregunta: string | null;
   fechaCreacion: Date;
   fechaActualizacion: Date;
 }) {

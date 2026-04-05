@@ -7,6 +7,7 @@ export type ContactoInput = {
   email: string;
   telefono: string;
   aceptaPromociones: boolean;
+  pregunta: string | null;
 };
 
 export type ProductoCreateInput = {
@@ -101,6 +102,7 @@ export function validateContactoInput(payload: unknown): ValidationResult<Contac
 
   const body = payload as Record<string, unknown>;
   const aceptaPromociones = parseBoolean(body.aceptaPromociones);
+  let pregunta: string | null = null;
 
   if (!isNonEmptyString(body.nombre)) {
     return { success: false, message: "El nombre es obligatorio." };
@@ -118,6 +120,14 @@ export function validateContactoInput(payload: unknown): ValidationResult<Contac
     return { success: false, message: "aceptaPromociones debe ser un valor booleano." };
   }
 
+  if ("pregunta" in body && body.pregunta !== null && body.pregunta !== undefined) {
+    if (!isNonEmptyString(body.pregunta)) {
+      return { success: false, message: "pregunta debe ser un texto no vacio o null." };
+    }
+
+    pregunta = body.pregunta.trim();
+  }
+
   return {
     success: true,
     data: {
@@ -125,6 +135,7 @@ export function validateContactoInput(payload: unknown): ValidationResult<Contac
       email: body.email.trim().toLowerCase(),
       telefono: body.telefono.trim(),
       aceptaPromociones,
+      pregunta,
     },
   };
 }

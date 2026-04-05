@@ -14,6 +14,7 @@ model Contacto {
   email              String   @unique
   telefono           String
   aceptaPromociones  Boolean  @default(false)
+  pregunta           String?
   fechaCreacion      DateTime @default(now())
   fechaActualizacion DateTime @updatedAt
 
