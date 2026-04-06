@@ -23,7 +23,7 @@ export async function POST(request: Request) {
         select: { id: true },
       }),
       prisma.producto.findUnique({
-        where: { id: idProducto },
+        where: { id: idProducto, activo: true },
         select: { id: true },
       }),
     ]);
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     }
 
     if (!producto) {
-      return NextResponse.json({ message: "No existe un producto con el idProducto indicado." }, { status: 400 });
+      return NextResponse.json({ message: "No existe un producto activo con el idProducto indicado." }, { status: 400 });
     }
 
     const cotizacionDetalle = await prisma.cotizacionDetalle.create({

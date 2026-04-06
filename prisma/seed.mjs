@@ -106,6 +106,7 @@ async function main() {
     precio: "199.99",
     imagenUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80",
     activo: true,
+    visible: true,
   });
 
   await upsertProducto({
@@ -115,6 +116,7 @@ async function main() {
     precio: "149.90",
     imagenUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
     activo: true,
+    visible: true,
   });
 
   await upsertProducto({
@@ -124,6 +126,7 @@ async function main() {
     precio: "89.50",
     imagenUrl: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80",
     activo: false,
+    visible: true,
   });
 
   await upsertContactoWhats({

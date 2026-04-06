@@ -29,6 +29,7 @@ model Producto {
   precio             Decimal  @db.Decimal(10, 2)
   imagenUrl          String
   activo             Boolean  @default(true)
+  visible            Boolean  @default(true)
   fechaCreacion      DateTime @default(now())
   fechaActualizacion DateTime @updatedAt
   cotizacionDetalles CotizacionDetalle[]

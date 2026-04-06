@@ -34,6 +34,7 @@ export function serializeProducto(producto: {
   precio: { toString(): string };
   imagenUrl: string;
   activo: boolean;
+  visible: boolean;
   fechaCreacion: Date;
   fechaActualizacion: Date;
 }) {

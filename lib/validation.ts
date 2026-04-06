@@ -17,6 +17,7 @@ export type ProductoCreateInput = {
   precio: string;
   imagenUrl: string;
   activo: boolean;
+  visible: boolean;
 };
 
 export type ProductoUpdateInput = {
@@ -26,6 +27,7 @@ export type ProductoUpdateInput = {
   precio?: string;
   imagenUrl?: string;
   activo?: boolean;
+  visible?: boolean;
 };
 
 export type ContactoWhatsInput = {
@@ -261,7 +263,8 @@ export function validateProductoCreateInput(payload: unknown): ValidationResult<
 
   const body = payload as Record<string, unknown>;
   const precio = parsePrecio(body.precio);
-  const activo = parseBoolean(body.activo);
+  const activo = "activo" in body ? parseBoolean(body.activo) : true;
+  const visible = "visible" in body ? parseBoolean(body.visible) : true;
 
   if (!isNonEmptyString(body.nombre)) {
     return { success: false, message: "El nombre es obligatorio." };
@@ -287,6 +290,10 @@ export function validateProductoCreateInput(payload: unknown): ValidationResult<
     return { success: false, message: "activo debe ser un valor booleano." };
   }
 
+  if (visible === null) {
+    return { success: false, message: "visible debe ser un valor booleano." };
+  }
+
   return {
     success: true,
     data: {
@@ -296,6 +303,7 @@ export function validateProductoCreateInput(payload: unknown): ValidationResult<
       precio,
       imagenUrl: body.imagenUrl.trim(),
       activo,
+      visible,
     },
   };
 }
@@ -350,6 +358,14 @@ export function validateProductoUpdateInput(payload: unknown): ValidationResult<
       return { success: false, message: "activo debe ser un valor booleano." };
     }
     data.activo = activo;
+  }
+
+  if ("visible" in body) {
+    const visible = parseBoolean(body.visible);
+    if (visible === null) {
+      return { success: false, message: "visible debe ser un valor booleano." };
+    }
+    data.visible = visible;
   }
 
   if (Object.keys(data).length === 0) {

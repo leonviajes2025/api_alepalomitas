@@ -8,7 +8,6 @@ export const runtime = "nodejs";
 export async function GET() {
   const productos = await prisma.producto.findMany({
     where: {
-      activo: true,
       visible: true,
     },
     orderBy: {

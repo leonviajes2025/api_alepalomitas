@@ -1,0 +1,2 @@
+ALTER TABLE "productos"
+ADD COLUMN "visible" BOOLEAN NOT NULL DEFAULT true;
