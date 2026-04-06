@@ -1,7 +1,7 @@
 import apiDocs from "@/data/api-docs.json";
 
 type Endpoint = {
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   path: string;
   description: string;
   operation: string;

@@ -193,6 +193,23 @@
               }
             }
           ]
+        },
+        {
+          "name": "PATCH Actualizar estatus WhatsApp",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/contactos-whats/{{pedidoId}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteEstatus\": \"confirmado\"\n}"
+            }
+          }
         }
       ]
     },

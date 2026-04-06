@@ -197,6 +197,22 @@ Solicitudes de cotizacion iniciadas desde WhatsApp.
 }
 ```
 
+- PATCH /api/contactos-whats/[id]
+  - Funcion: Actualiza unicamente el estatus del cliente de una solicitud de WhatsApp existente.
+  - Request: Body JSON con solo clienteEstatus. Requiere id entero positivo en ruta.
+  - Responses: 200 OK, 400 Bad Request, 404 Not Found
+  - Params:
+    - id (integer, obligatorio): Identificador de la solicitud. Debe ser entero positivo.
+  - Body:
+    - clienteEstatus (string, obligatorio): Nuevo estatus del cliente. Debe ser un texto no vacio.
+  - Ejemplo JSON:
+```json
+{
+  "clienteEstatus": "confirmado"
+}
+```
+  - Notas: Rechaza cualquier campo distinto de clienteEstatus para mantener la actualizacion estrictamente acotada.
+
 ### Cotizacion Detalle
 
 Detalle de piezas y productos vinculados a una cotizacion de WhatsApp.

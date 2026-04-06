@@ -1,6 +1,6 @@
 {
   "basePath": "/api",
-  "methodLegend": ["GET", "POST", "PUT", "DELETE"],
+  "methodLegend": ["GET", "POST", "PUT", "PATCH", "DELETE"],
   "postman": {
     "info": {
       "name": "back_2 API",
@@ -181,6 +181,23 @@
             "  pm.collectionVariables.set('pedidoId', String(response.id));",
             "}"
           ]
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/contactos-whats/[id]",
+          "postmanPath": "/api/contactos-whats/{{pedidoId}}",
+          "description": "Actualiza unicamente el estatus del cliente de una solicitud de WhatsApp existente.",
+          "operation": "Actualizar estatus WhatsApp",
+          "request": "Body JSON con solo clienteEstatus. Requiere id entero positivo en ruta.",
+          "responses": ["200 OK", "400 Bad Request", "404 Not Found"],
+          "routeParams": [
+            { "name": "id", "type": "integer", "required": true, "description": "Identificador de la solicitud. Debe ser entero positivo." }
+          ],
+          "bodyFields": [
+            { "name": "clienteEstatus", "type": "string", "required": true, "description": "Nuevo estatus del cliente. Debe ser un texto no vacio." }
+          ],
+          "exampleBody": "{\n  \"clienteEstatus\": \"confirmado\"\n}",
+          "notes": "Rechaza cualquier campo distinto de clienteEstatus para mantener la actualizacion estrictamente acotada."
         }
       ]
     },

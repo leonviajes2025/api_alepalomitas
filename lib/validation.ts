@@ -37,6 +37,10 @@ export type ContactoWhatsInput = {
   fechaEntregaEstimada: Date | null;
 };
 
+export type ContactoWhatsClienteEstatusUpdateInput = {
+  clienteEstatus: string;
+};
+
 export type CotizacionDetalleCreateInput = {
   idPedido: number;
   idProducto: number;
@@ -425,6 +429,37 @@ export function validateContactoWhatsInput(payload: unknown): ValidationResult<C
       cotizacion: body.cotizacion.trim(),
       clienteEstatus,
       fechaEntregaEstimada,
+    },
+  };
+}
+
+export function validateContactoWhatsClienteEstatusUpdateInput(
+  payload: unknown,
+): ValidationResult<ContactoWhatsClienteEstatusUpdateInput> {
+  if (!payload || typeof payload !== "object") {
+    return { success: false, message: "El cuerpo de la solicitud debe ser un objeto JSON." };
+  }
+
+  const body = payload as Record<string, unknown>;
+  const allowedFields = ["clienteEstatus"];
+  const unexpectedFields = Object.keys(body).filter((field) => !allowedFields.includes(field));
+
+  if (unexpectedFields.length > 0) {
+    return { success: false, message: "Solo puedes actualizar el campo clienteEstatus." };
+  }
+
+  if (!("clienteEstatus" in body)) {
+    return { success: false, message: "clienteEstatus es obligatorio." };
+  }
+
+  if (!isNonEmptyString(body.clienteEstatus)) {
+    return { success: false, message: "clienteEstatus debe ser un texto no vacio." };
+  }
+
+  return {
+    success: true,
+    data: {
+      clienteEstatus: body.clienteEstatus.trim(),
     },
   };
 }
