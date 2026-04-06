@@ -178,6 +178,33 @@ nombreUsuario: admin
 contrasena: Admin123
 ```
 
+### Logs de errores
+
+- GET `/api/logs-errores`
+- POST `/api/logs-errores`
+
+Este recurso permite registrar errores reportados por distintos dominios o integraciones que consumen la API, dejando evidencia del dominio afectado, el mensaje, el contexto y la fecha exacta de ocurrencia.
+
+Ejemplo de payload para crear un log de error:
+
+```json
+{
+  "dominio": "frontend-web",
+  "origen": "checkout",
+  "metodo": "POST",
+  "codigo": "PAYMENT_TIMEOUT",
+  "mensaje": "No fue posible completar el cobro.",
+  "detalle": "La pasarela no respondio dentro del tiempo esperado.",
+  "contexto": {
+    "pedidoId": 123,
+    "traceId": "req-01HXYZ"
+  },
+  "fechaOcurrencia": "2026-04-05T18:45:12.000Z"
+}
+```
+
+`fechaOcurrencia` es opcional. Si no se envia, la API registra la fecha y hora actuales.
+
 ## Postman
 
 Se incluye una coleccion lista para importar en [postman/back_2.postman_collection.json](postman/back_2.postman_collection.json).

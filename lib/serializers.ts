@@ -97,3 +97,41 @@ export function serializeInicioSesion(inicioSesion: {
     fechaCreacion: inicioSesion.fechaCreacion.toISOString(),
   };
 }
+
+function deserializeContexto(contexto: string | null) {
+  if (contexto === null) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(contexto);
+  } catch {
+    return contexto;
+  }
+}
+
+export function serializeLogError(logError: {
+  id: number;
+  dominio: string;
+  origen: string | null;
+  metodo: string | null;
+  codigo: string | null;
+  mensaje: string;
+  detalle: string | null;
+  contexto: string | null;
+  fechaOcurrencia: Date;
+  fechaCreacion: Date;
+}) {
+  return {
+    id: logError.id,
+    dominio: logError.dominio,
+    origen: logError.origen,
+    metodo: logError.metodo,
+    codigo: logError.codigo,
+    mensaje: logError.mensaje,
+    detalle: logError.detalle,
+    contexto: deserializeContexto(logError.contexto),
+    fechaOcurrencia: logError.fechaOcurrencia.toISOString(),
+    fechaCreacion: logError.fechaCreacion.toISOString(),
+  };
+}

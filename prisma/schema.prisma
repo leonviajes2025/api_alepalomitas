@@ -82,3 +82,20 @@ model InicioSesion {
   @@index([idUsuario])
   @@map("inicios_sesion")
 }
+
+model LogError {
+  id              Int      @id @default(autoincrement())
+  dominio         String   @db.VarChar(120)
+  origen          String?  @db.VarChar(255)
+  metodo          String?  @db.VarChar(20)
+  codigo          String?  @db.VarChar(100)
+  mensaje         String
+  detalle         String?
+  contexto        String?
+  fechaOcurrencia DateTime @default(now())
+  fechaCreacion   DateTime @default(now())
+
+  @@index([dominio, fechaOcurrencia])
+  @@index([fechaOcurrencia])
+  @@map("logs_errores")
+}

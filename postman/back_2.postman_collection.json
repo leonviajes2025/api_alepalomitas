@@ -358,6 +358,35 @@
           }
         }
       ]
+    },
+    {
+      "name": "Logs de Errores",
+      "item": [
+        {
+          "name": "GET logs-errores",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/logs-errores"
+          }
+        },
+        {
+          "name": "POST log-error",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dominio\": \"frontend-web\",\n  \"origen\": \"checkout\",\n  \"metodo\": \"POST\",\n  \"codigo\": \"PAYMENT_TIMEOUT\",\n  \"mensaje\": \"No fue posible completar el cobro.\",\n  \"detalle\": \"La pasarela no respondio dentro del tiempo esperado.\",\n  \"contexto\": {\n    \"pedidoId\": 123,\n    \"traceId\": \"req-01HXYZ\"\n  },\n  \"fechaOcurrencia\": \"2026-04-05T18:45:12.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/api/logs-errores"
+          }
+        }
+      ]
     }
   ]
 }

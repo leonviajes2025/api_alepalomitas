@@ -59,6 +59,17 @@ export type UsuarioAccesoUpdateInput = {
   tienePermiso?: boolean;
 };
 
+export type LogErrorCreateInput = {
+  dominio: string;
+  origen: string | null;
+  metodo: string | null;
+  codigo: string | null;
+  mensaje: string;
+  detalle: string | null;
+  contexto: string | null;
+  fechaOcurrencia: Date;
+};
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function isNonEmptyString(value: unknown): value is string {
@@ -142,6 +153,60 @@ function parseDateOnly(value: unknown): Date | null {
   }
 
   return parsed;
+}
+
+function parseDateTime(value: unknown): Date | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const normalized = value.trim();
+
+  if (normalized.length === 0) {
+    return null;
+  }
+
+  const parsed = new Date(normalized);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+
+  return parsed;
+}
+
+function parseOptionalString(value: unknown, fieldName: string): ValidationResult<string | null> {
+  if (value === null || value === undefined) {
+    return { success: true, data: null };
+  }
+
+  if (!isNonEmptyString(value)) {
+    return { success: false, message: `${fieldName} debe ser un texto no vacio o null.` };
+  }
+
+  return { success: true, data: value.trim() };
+}
+
+function parseContexto(value: unknown): ValidationResult<string | null> {
+  if (value === null || value === undefined) {
+    return { success: true, data: null };
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim();
+
+    if (normalized.length === 0) {
+      return { success: false, message: "contexto debe ser un texto no vacio, un JSON valido o null." };
+    }
+
+    return { success: true, data: normalized };
+  }
+
+  try {
+    return { success: true, data: JSON.stringify(value) };
+  } catch {
+    return { success: false, message: "contexto debe ser serializable a JSON." };
+  }
 }
 
 export function validateContactoInput(payload: unknown): ValidationResult<ContactoInput> {
@@ -507,4 +572,71 @@ export function validateUsuarioAccesoUpdateInput(
   }
 
   return { success: true, data };
+}
+
+export function validateLogErrorCreateInput(payload: unknown): ValidationResult<LogErrorCreateInput> {
+  if (!payload || typeof payload !== "object") {
+    return { success: false, message: "El cuerpo de la solicitud debe ser un objeto JSON." };
+  }
+
+  const body = payload as Record<string, unknown>;
+  const origen = parseOptionalString(body.origen, "origen");
+  const metodo = parseOptionalString(body.metodo, "metodo");
+  const codigo = parseOptionalString(body.codigo, "codigo");
+  const detalle = parseOptionalString(body.detalle, "detalle");
+  const contexto = parseContexto(body.contexto);
+
+  if (!isNonEmptyString(body.dominio)) {
+    return { success: false, message: "El dominio es obligatorio." };
+  }
+
+  if (!isNonEmptyString(body.mensaje)) {
+    return { success: false, message: "El mensaje es obligatorio." };
+  }
+
+  if (!origen.success) {
+    return origen;
+  }
+
+  if (!metodo.success) {
+    return metodo;
+  }
+
+  if (!codigo.success) {
+    return codigo;
+  }
+
+  if (!detalle.success) {
+    return detalle;
+  }
+
+  if (!contexto.success) {
+    return contexto;
+  }
+
+  let fechaOcurrencia = new Date();
+
+  if (body.fechaOcurrencia !== null && body.fechaOcurrencia !== undefined) {
+    const parsedFechaOcurrencia = parseDateTime(body.fechaOcurrencia);
+
+    if (parsedFechaOcurrencia === null) {
+      return { success: false, message: "fechaOcurrencia debe tener formato de fecha-hora valido o null." };
+    }
+
+    fechaOcurrencia = parsedFechaOcurrencia;
+  }
+
+  return {
+    success: true,
+    data: {
+      dominio: body.dominio.trim(),
+      origen: origen.data,
+      metodo: metodo.data?.toUpperCase() ?? null,
+      codigo: codigo.data,
+      mensaje: body.mensaje.trim(),
+      detalle: detalle.data,
+      contexto: contexto.data,
+      fechaOcurrencia,
+    },
+  };
 }
