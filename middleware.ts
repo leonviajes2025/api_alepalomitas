@@ -3,8 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 // Rutas a proteger (no incluir rutas públicas como creación/login)
 const PROTECTED = [
   { path: "/api/contactos", methods: ["GET"] },
-  { path: "/api/productos/", methods: ["DELETE"] }, // match prefix + id
+  { path: "/api/productos/", methods: ["DELETE", "PUT"] }, // match prefix + id (PUT, DELETE)
+  { path: "/api/productos", methods: ["POST"] },
+  { path: "/api/productos/activos", methods: ["GET"] },
   { path: "/api/contactos-whats", methods: ["GET"] },
+  { path: "/api/contactos-whats/", methods: ["PATCH"] },
   { path: "/api/boton-whats", methods: ["GET"] },
   { path: "/api/usuarios-acceso", methods: ["GET"] },
   { path: "/api/usuarios-acceso/", methods: ["PUT"] }, // prefix for /[id]
@@ -98,9 +101,12 @@ export const config = {
   matcher: [
     "/api/contactos",
     "/api/contactos-whats",
+    "/api/contactos-whats/:path*",
     "/api/boton-whats",
     "/api/usuarios-acceso",
     "/api/usuarios-acceso/:path*",
+    "/api/productos",
+    "/api/productos/activos",
     "/api/productos/:path*",
     "/api/logs-errores",
   ],
