@@ -202,6 +202,31 @@
       ]
     },
     {
+      "name": "boton-whats",
+      "postmanName": "Boton WhatsApp",
+      "route": "/api/boton-whats",
+      "summary": "Registro de clics del boton de mandar mensaje por WhatsApp.",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/boton-whats",
+          "description": "Lista todos los clics registrados del boton de WhatsApp, mostrando primero los mas recientes.",
+          "operation": "Listar clics WhatsApp",
+          "request": "Sin body. Ordena por fechaClick desc y luego por id desc.",
+          "responses": ["200 OK"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/boton-whats",
+          "description": "Registra un clic del boton de WhatsApp a partir de los headers de la peticion.",
+          "operation": "Registrar clic WhatsApp",
+          "request": "Sin body obligatorio. Obtiene IP, dispositivo, navegador y fechaClick desde la peticion actual.",
+          "responses": ["201 Created"],
+          "notes": "La IP se toma de headers proxy comunes; dispositivo y navegador se derivan del user-agent."
+        }
+      ]
+    },
+    {
       "name": "cotizacion-detalle",
       "postmanName": "Cotizacion Detalle",
       "route": "/api/cotizacion-detalle",

@@ -138,3 +138,19 @@ export function serializeLogError(logError: {
     fechaCreacion: logError.fechaCreacion.toISOString(),
   };
 }
+
+export function serializeBotonWhats(botonWhats: {
+  id: number;
+  ip: string;
+  dispositivo: string;
+  navegador: string;
+  fechaClick: Date;
+}) {
+  return {
+    id: botonWhats.id,
+    ip: botonWhats.ip,
+    dispositivo: botonWhats.dispositivo,
+    navegador: botonWhats.navegador,
+    fechaClick: botonWhats.fechaClick.toISOString(),
+  };
+}

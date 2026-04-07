@@ -101,3 +101,14 @@ model LogError {
   @@index([fechaOcurrencia])
   @@map("logs_errores")
 }
+
+model BotonWhats {
+  id          Int      @id @default(autoincrement())
+  ip          String   @map("IP") @db.VarChar(120)
+  dispositivo String   @map("Dipositivo") @db.VarChar(255)
+  navegador   String   @map("Navegador") @db.VarChar(255)
+  fechaClick  DateTime @default(now()) @map("fechaClick")
+
+  @@index([fechaClick])
+  @@map("boton_whats")
+}

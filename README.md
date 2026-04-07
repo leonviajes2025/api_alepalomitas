@@ -213,6 +213,21 @@ Solicitudes de cotizacion iniciadas desde WhatsApp.
 ```
   - Notas: Rechaza cualquier campo distinto de clienteEstatus para mantener la actualizacion estrictamente acotada.
 
+### Boton WhatsApp
+
+Registro de clics del boton de mandar mensaje por WhatsApp.
+
+- GET /api/boton-whats
+  - Funcion: Lista todos los clics registrados del boton de WhatsApp, mostrando primero los mas recientes.
+  - Request: Sin body. Ordena por fechaClick desc y luego por id desc.
+  - Responses: 200 OK
+
+- POST /api/boton-whats
+  - Funcion: Registra un clic del boton de WhatsApp a partir de los headers de la peticion.
+  - Request: Sin body obligatorio. Obtiene IP, dispositivo, navegador y fechaClick desde la peticion actual.
+  - Responses: 201 Created
+  - Notas: La IP se toma de headers proxy comunes; dispositivo y navegador se derivan del user-agent.
+
 ### Cotizacion Detalle
 
 Detalle de piezas y productos vinculados a una cotizacion de WhatsApp.

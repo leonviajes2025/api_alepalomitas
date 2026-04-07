@@ -214,6 +214,25 @@
       ]
     },
     {
+      "name": "Boton WhatsApp",
+      "item": [
+        {
+          "name": "GET Listar clics WhatsApp",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/boton-whats"
+          }
+        },
+        {
+          "name": "POST Registrar clic WhatsApp",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/boton-whats"
+          }
+        }
+      ]
+    },
+    {
       "name": "Cotizacion Detalle",
       "item": [
         {
