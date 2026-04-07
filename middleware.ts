@@ -78,19 +78,48 @@ async function verifyJwtEdge(token: string, secret: string) {
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const method = req.method;
+  const origin = req.headers.get("origin") || undefined;
 
-  if (!isProtectedRoute(pathname, method)) return NextResponse.next();
+  function setCors(resp: NextResponse) {
+    const ALLOWED_ORIGINS = ["https://admin.palomitasbee.com", "http://localhost:3000"];
+    if (!origin) return resp;
+    if (!ALLOWED_ORIGINS.includes(origin)) return resp;
+    resp.headers.set("Access-Control-Allow-Origin", origin);
+    resp.headers.set("Vary", "Origin");
+    resp.headers.set("Access-Control-Allow-Credentials", "true");
+    resp.headers.set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+    resp.headers.set("Access-Control-Allow-Headers", "Content-Type,Authorization");
+    resp.headers.set("Access-Control-Max-Age", "86400");
+    return resp;
+  }
+
+  // Handle CORS preflight for any API route
+  if (pathname.startsWith("/api") && method === "OPTIONS") {
+    const pre = new NextResponse(null, { status: 204 });
+    return setCors(pre);
+  }
+  if (!isProtectedRoute(pathname, method)) {
+    const resp = NextResponse.next();
+    return setCors(resp);
+  }
 
   const auth = req.headers.get("authorization") || "";
   const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
-  if (!token) return new NextResponse(JSON.stringify({ message: "No autorizado" }), { status: 401, headers: { "content-type": "application/json" } });
+  if (!token) {
+    const res = new NextResponse(JSON.stringify({ message: "No autorizado" }), { status: 401, headers: { "content-type": "application/json" } });
+    return setCors(res);
+  }
 
   const secret = process.env.JWT_SECRET || "";
-  if (!secret) return new NextResponse(JSON.stringify({ message: "Server misconfigured" }), { status: 500, headers: { "content-type": "application/json" } });
+  if (!secret) {
+    const res = new NextResponse(JSON.stringify({ message: "Server misconfigured" }), { status: 500, headers: { "content-type": "application/json" } });
+    return setCors(res);
+  }
 
   const payload = await verifyJwtEdge(token, secret);
   if (!payload || !payload.tienePermiso) {
-    return new NextResponse(JSON.stringify({ message: "No autorizado" }), { status: 401, headers: { "content-type": "application/json" } });
+    const res = new NextResponse(JSON.stringify({ message: "No autorizado" }), { status: 401, headers: { "content-type": "application/json" } });
+    return setCors(res);
   }
 
   // usuario autorizado
@@ -98,16 +127,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/api/contactos",
-    "/api/contactos-whats",
-    "/api/contactos-whats/:path*",
-    "/api/boton-whats",
-    "/api/usuarios-acceso",
-    "/api/usuarios-acceso/:path*",
-    "/api/productos",
-    "/api/productos/activos",
-    "/api/productos/:path*",
-    "/api/logs-errores",
-  ],
+  matcher: ["/api/:path*"],
 };
