@@ -27,4 +27,4 @@ export const POST = withApiAuth(async function POST(req: Request) {
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err?.message ?? String(err) }), { status: 500 });
   }
-}
+});

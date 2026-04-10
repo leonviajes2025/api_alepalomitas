@@ -18,4 +18,4 @@ export const DELETE = withApiAuth(async function DELETE(req: Request) {
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err?.message ?? String(err) }), { status: 500 });
   }
-}
+});
