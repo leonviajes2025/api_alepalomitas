@@ -99,8 +99,17 @@ npm run prisma:seed
 - Usa DATABASE_URL con pooling por el puerto 6543.
 - Usa DIRECT_URL con conexion directa por el puerto 5432 para migraciones.
 - Vercel ejecuta automaticamente `npm run vercel-build`.
-- Ese flujo corre `prisma migrate deploy` antes de `next build`.
-- El build local `npm run build` sigue sin aplicar migraciones automaticamente.
+ - Vercel ejecuta automaticamente `npm run vercel-build`.
+ - Nota: El script `vercel-build` fue cambiado para NO ejecutar migraciones durante el build. Evita ejecutar `prisma migrate deploy` dentro del proceso de build porque la base de datos puede no estar disponible o las credenciales no estar configuradas durante esa fase.
+ - Recomendación: Ejecuta las migraciones de Prisma fuera del build, por ejemplo en un job de CI previo al despliegue o mediante un paso manual/post-deploy:
+
+```bash
+# Ejecutar migraciones antes o fuera del build
+npm run prisma:deploy
+```
+
+ - Usa `DIRECT_URL` (con conexión directa al puerto 5432) para aplicar migraciones y `DATABASE_URL` (con pooling) para la ejecución normal de la aplicación.
+ - El build local `npm run build` no aplica migraciones automáticamente.
 
 <!-- api-docs:start -->
 
